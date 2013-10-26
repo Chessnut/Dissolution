@@ -1,0 +1,8 @@
+"Gamemode"
+{
+	"base"			"nutscript"
+	"title"			"Dissolution"
+	"author"		"Chessnut"
+	"menusystem"	"1"
+	"maps"			"^rp_"
+}

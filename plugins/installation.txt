@@ -1,0 +1,12 @@
+This plugin will automatically handle sending the Workshop download to the
+client (WorkshopDL) but it however cannot install the Workshop addon on the server.
+
+You can find both Workshop add-ons here:
+
+http://steamcommunity.com/sharedfiles/filedetails/?id=128089118
+http://steamcommunity.com/sharedfiles/filedetails/?id=128093075
+
+You can find instructions on using Workshop add-ons for the server at the
+official Garry's Mod Wiki here:
+
+http://wiki.garrysmod.com/page/Workshop_for_Dedicated_Servers
