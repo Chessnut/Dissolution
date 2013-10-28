@@ -19,7 +19,7 @@ function ENT:Initialize()
 	self.breathing:ChangeVolume(0.3, 0)
 	self.loco:SetDeathDropHeight(700)
 	self:SetHealth(125)
-	self:SetCollisionBounds(Vector(-4,-4, 0), Vector(4, 4, 64))
+	self:SetCollisionBounds(Vector(-12,-12, 0), Vector(12, 12, 64))
 	self:SetSkin(math.random(0, self:SkinCount() - 1))
 
 	hook.Add("EntityRemoved", self, function()
@@ -60,16 +60,9 @@ function ENT:RunBehaviour()
 
 						if (entity.nut_BreakHealth <= 0) then
 							entity.nut_BreakHealth = 100
-							entity:Fire("unlock")
-							entity:Fire("open")
-							entity:SetCollisionGroup(COLLISION_GROUP_WEAPON)
-							entity:EmitSound("physics/wood/wood_furniture_break"..math.random(1, 2)..".wav")
-
-							timer.Create("nut_DoorCollide"..entity:EntIndex(), 5, 1, function()
-								if (IsValid(entity)) then
-									entity:SetCollisionGroup(COLLISION_GROUP_NONE)
-								end
-							end)
+							nut.util.BlastDoor(entity, self:GetForward() * 600)
+							entity:EmitSound("physics/wood/wood_furniture_break"..math.random(1, 2)..".wav", 140)
+							util.ScreenShake(entity:GetPos(), 8, 8, math.Rand(0.6, 0.8), 560)
 						end
 
 						local effect = EffectData()
