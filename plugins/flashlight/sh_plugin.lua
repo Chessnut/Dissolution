@@ -6,4 +6,6 @@ function PLUGIN:PlayerSwitchFlashlight(client, state)
 	if (state and !client:HasItem("flashlight")) then
 		return false
 	end
+
+	return true
 end
