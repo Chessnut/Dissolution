@@ -45,10 +45,10 @@ function ENT:RunBehaviour()
 		if (IsValid(target) and target:Alive()) then
 			local data = {}
 				data.start = self:GetPos()
-				data.endpos = self:GetPos() + self:GetForward() * 84
+				data.endpos = self:GetPos() + self:GetForward()*128
 				data.filter = self
-				data.mins = self:OBBMins() * 0.5
-				data.maxs = self:OBBMaxs() * 0.5
+				data.mins = self:OBBMins() * 0.65
+				data.maxs = self:OBBMaxs() * 0.65
 			local trace = util.TraceHull(data)
 			local entity = trace.Entity
 
@@ -80,16 +80,18 @@ function ENT:RunBehaviour()
 			end
 		end
 
-		if (IsValid(target) and target:Alive() and self:GetRangeTo(target) <= 750) then
-			if (self:GetRangeTo(target) <= 38) then
-				self:EmitSound("npc/zombie_poison/pz_throw"..math.random(1, 2)..".wav", 100, math.random(75, 125))
+		if (IsValid(target) and target:Alive() and self:GetRangeTo(target) <= 1500) then
+			self.loco:FaceTowards(target:GetPos())
+
+			if (self:GetRangeTo(target) <= 42) then
+				self:EmitSound("npc/zombie_poison/pz_throw2.wav", 100, math.random(75, 125))
 
 				self:TimedEvent(0.3, function()
 					self:EmitSound("npc/vort/claw_swing"..math.random(1, 2)..".wav")
 				end)
 
 				self:TimedEvent(0.4, function()
-					if (IsValid(target) and self:GetRangeTo(target) <= 36) then
+					if (IsValid(target) and self:GetRangeTo(target) <= 50) then
 						local damageInfo = DamageInfo()
 							damageInfo:SetAttacker(self)
 							damageInfo:SetDamage(math.random(5, 10))
@@ -126,7 +128,7 @@ function ENT:RunBehaviour()
 					self.nextYell = CurTime() + math.random(4, 8)
 				end
 
-				self.loco:SetDesiredSpeed(230)
+				self.loco:SetDesiredSpeed(320)
 				self:MoveToPos(target:GetPos(), {
 					maxage = 0.67
 				})
@@ -156,6 +158,8 @@ function ENT:RunBehaviour()
 						self:AlertNearby(v)
 						self.target = v
 						self:PlaySequenceAndWait("wave_smg1", 0.9)
+
+						break
 					end
 				end
 			end
@@ -167,7 +171,7 @@ end
 
 function ENT:AlertNearby(target, range, noNoise)
 	range = range or 2400
-	noNoise = noNoise or true
+	noNoise = noNoise or (#ents.FindByClass("nut_zombie") < 1)
 
 	if (IsValid(self.target)) then
 		return
